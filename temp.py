@@ -13,6 +13,6 @@ file_path_in = os.path.join(direct, 'xperimental-data-conv','tests','test_files'
 sbh_overwrite = '1'
 sbh_collec = 'Flapjack'
 
-hm, shm = xdc.experimental_data_uploader(file_path_in, fj_user, fj_pass,
+sbol_collec_url = xdc.experimental_data_uploader(file_path_in, fj_user, fj_pass,
                                sbh_user, sbh_pass, sbh_collec, sbh_overwrite=True,
                                fj_overwrite=True)
