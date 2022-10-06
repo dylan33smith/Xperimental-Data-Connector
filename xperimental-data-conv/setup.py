@@ -5,7 +5,7 @@ from setuptools import find_packages, setup
 
 setup(name='xperimental-data-conv',
       version='1.0.0-alpha-9',
-      url='https://github.com/SynBioDex/Experimental-Data-Connector',
+      url='https://github.com/SynBioDex/Experimental-Data-Convertor',
       license='BSD 3-clause',
       maintainer='Jet Mante',
       maintainer_email='jet.mante@colorado.edu',
