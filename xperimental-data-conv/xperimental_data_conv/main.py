@@ -40,6 +40,7 @@ def experimental_data_uploader(file_path_in, fj_user, fj_pass, sbh_user,
                }
      )
      sbol_graph_uri = response.json()['graphUri']
+     sbol_collec_url = f'{sbol_graph_uri}/{sbh_collec}/'
 
      # Parse sbol to create hashmap of flapjack id to sbol uri
      doc = sbol2.Document()
@@ -49,7 +50,7 @@ def experimental_data_uploader(file_path_in, fj_user, fj_pass, sbh_user,
      for tl in doc:
           if 'https://flapjack.rudge-lab.org/ID' in tl.properties:
                sbol_uri = tl.properties['http://sbols.org/v2#persistentIdentity'][0]
-               sbol_uri = sbol_uri.replace(homespace, f'{sbol_graph_uri}/{sbh_collec}/')
+               sbol_uri = sbol_uri.replace(homespace, sbol_collec_url)
                sbol_uri = f'{sbol_uri}/1'
 
                sbol_name = str(tl.properties['http://sbols.org/v2#displayId'][0])
@@ -105,7 +106,7 @@ def experimental_data_uploader(file_path_in, fj_user, fj_pass, sbh_user,
      # if response.text == "Successfully uploaded":
      #      success = True
 
-     return(hash_map, sbol_hash_map)
+     return(sbol_collec_url)
 
 
 
