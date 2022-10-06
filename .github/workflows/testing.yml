@@ -20,8 +20,8 @@ jobs:
       - name: Install Pytest dependencies
         run: |
           python -m pip install pytest
-          python -m pip install -e excel2sbol
+          python -m pip install -e xperimental-data-conv
       - name: Test with pytest
         run: |
-          cd ./excel2sbol
+          cd ./xperimental-data-conv
           python -m pytest -vv -s

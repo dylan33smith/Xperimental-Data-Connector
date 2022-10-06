@@ -1,4 +1,4 @@
-name: Excel to SBOL Linting
+name: XDC Linting
 
 on:
   pull_request:
