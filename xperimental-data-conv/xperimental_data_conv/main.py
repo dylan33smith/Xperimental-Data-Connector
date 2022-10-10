@@ -73,7 +73,10 @@ def experimental_data_uploader(file_path_in, fj_user, fj_pass, sbh_user,
      for tl in doc:
           id = str(tl).split('/')[-2]
           if id in hash_map:
-               tl.setPropertyValue('https://flapjack.rudge-lab.org/ID', f'http://wwww.flapjack.com/{hash_map[id]}')
+            setattr(tl, 'flapjack_ID',
+                    sbol2.URIProperty(tl,
+                    'https://flapjack.rudge-lab.org/ID',
+                     '0', '*', [], initial_value=f'http://wwww.flapjack.com/{hash_map[id]}'))
      doc.write(file_path_out2)
 
      if sbh_overwrite:
