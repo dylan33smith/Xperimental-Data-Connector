@@ -14,5 +14,5 @@ setup(name='xperimental-data-conv',
       packages=find_packages(include=['xperimental_data_conv']),
       long_description=open('README.md').read(),
       install_requires=['excel2flapjack~=1.0.2',
-                        'excel2sbol~=1.0.20'],
+                        'excel2sbol~=1.0.22'],
       zip_safe=False)
