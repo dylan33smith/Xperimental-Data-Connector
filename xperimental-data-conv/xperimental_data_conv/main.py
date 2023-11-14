@@ -5,10 +5,16 @@ import tempfile
 import requests
 import os
       
+# flapjack original website = http://flapjack.rudge-lab.org/
 
-def experimental_data_uploader(file_path_in, fj_user, fj_pass, sbh_user,
+# added sbh_instance as an argument to point to a specific instance of sbh
+     # original instance == https://synbiohub.org/ -> must include tailing slash
+
+##### added sbh_instance and fj_instance
+def experimental_data_uploader(sbh_instance, fj_instance, file_path_in, fj_user, fj_pass, sbh_user,
                                sbh_pass, sbh_collec, sbh_overwrite=False,
                                fj_overwrite=False):
+     
 
      # create temporary directory to write intermediate files to
      temp_dir = tempfile.TemporaryDirectory()
@@ -22,7 +28,8 @@ def experimental_data_uploader(file_path_in, fj_user, fj_pass, sbh_user,
 
      # SBH Login
      response = requests.post(
-          'https://synbiohub.org/login',
+          ##### old - 'https://synbiohub.org/login'
+          sbh_instance + '/login',
           headers={'Accept': 'text/plain'},
           data={
                'email': sbh_user,
@@ -33,7 +40,8 @@ def experimental_data_uploader(file_path_in, fj_user, fj_pass, sbh_user,
 
      # Pull graph uri from synbiohub
      response = requests.get(
-          'https://synbiohub.org/profile',
+          ##### old - 'https://synbiohub.org/profile'
+          sbh_instance + '/profile',
           headers={
                'Accept': 'text/plain',
                'X-authorization': x_token
@@ -46,9 +54,38 @@ def experimental_data_uploader(file_path_in, fj_user, fj_pass, sbh_user,
      doc = sbol2.Document()
      doc.read(file_path_out)
 
+     '''
+     These are SBOL objects
+     doc:  
+     Design........................0
+     Build.........................0
+     Test..........................0
+     Analysis......................0
+     ComponentDefinition...........8
+     ModuleDefinition..............3
+     Model.........................0
+     Sequence......................0
+     Collection....................1
+     Activity......................0
+     Plan..........................0
+     Agent.........................0
+     Attachment....................0
+     CombinatorialDerivation.......0
+     Implementation................0
+     SampleRoster..................0
+     Experiment....................2
+     ExperimentalData..............4
+     Annotation Objects............0
+     ---
+     Total: .........................18
+     '''
+
+     print("\n", "\n", "Flapjack portion of XDC")
      sbol_hash_map = {}
+     # each tl in doc below is a URI (created in homespace) by excel2sbol.converter
      for tl in doc:
-          if 'https://flapjack.rudge-lab.org/ID' in tl.properties:
+          ##### old - https://flapjack.rudge-lab.org/ID
+          if fj_instance + '/ID' in tl.properties:
                sbol_uri = tl.properties['http://sbols.org/v2#persistentIdentity'][0]
                sbol_uri = sbol_uri.replace(homespace, sbol_collec_url)
                sbol_uri = f'{sbol_uri}/1'
@@ -58,7 +95,8 @@ def experimental_data_uploader(file_path_in, fj_user, fj_pass, sbh_user,
 
 
      # upload the excel file to flapjack and get hash map back
-     fj_url = "flapjack.rudge-lab.org:8000"
+     ##### old - flapjack.rudge-lab.org:8000
+     fj_url = fj_instance + ":8000"
      # hash_map = e2f.flapjack_upload(fj_url, fj_user, fj_pass, file_path_in)
      hash_map = e2f.flapjack_upload(fj_url, fj_user, fj_pass, file_path_in,
                                     sbol_hash_map=sbol_hash_map,
@@ -75,7 +113,9 @@ def experimental_data_uploader(file_path_in, fj_user, fj_pass, sbh_user,
           if id in hash_map:
             setattr(tl, 'flapjack_ID',
                     sbol2.URIProperty(tl,
-                    'https://flapjack.rudge-lab.org/ID',
+                    ##### old -  'https://flapjack.rudge-lab.org/ID'
+                    fj_instance + '/ID',
+                    ##### old - f'http://wwww.flapjack.com/{hash_map[id]}'
                      '0', '*', [], initial_value=f'http://wwww.flapjack.com/{hash_map[id]}'))
      doc.write(file_path_out2)
 
@@ -85,7 +125,8 @@ def experimental_data_uploader(file_path_in, fj_user, fj_pass, sbh_user,
           sbh_overwrite = '0'
      # SBH file upload
      response = requests.post(
-          'https://synbiohub.org/submit',
+          ##### old - 'https://synbiohub.org/submit'
+          sbh_instance + '/submit',
           headers={
                'Accept': 'text/plain',
                'X-authorization': x_token
@@ -112,6 +153,7 @@ def experimental_data_uploader(file_path_in, fj_user, fj_pass, sbh_user,
      return(sbol_collec_url)
 
 
-
+if __name__=="__main__":
+     print('main')
 
 
