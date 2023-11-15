@@ -1,5 +1,5 @@
 from sre_constants import SUCCESS
-from base.xperimental_data_conv.main import experimental_data_uploader as xdc
+import xperimental_data_conv.main as xdc
 import os
 
 fj_user = "dylan33smith"
@@ -12,7 +12,7 @@ sbh_instance = "https://synbiohub.colorado.edu"
 fj_instance = "flapjack.rudge-lab.org"
 
 direct = os.path.split(__file__)[0]
-file_path_in = os.path.join(direct, 'base','tests','test_files', 'flapjack_excel_converter_v030.xlsx')
+file_path_in = os.path.join(direct, 'xperimental-data-conv','tests','test_files', 'flapjack_excel_converter_v030.xlsx')
 sbh_overwrite = '1'
 # sbh_collec is what you want to name the collection in sbh
 sbh_collec = 'Flapjack'
