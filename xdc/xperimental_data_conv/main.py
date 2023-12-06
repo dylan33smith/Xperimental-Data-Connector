@@ -84,7 +84,7 @@ def experimental_data_uploader(sbh_instance, fj_instance, file_path_in, fj_user,
      sbol_hash_map = {}
      # each tl in doc below is a URI (created in homespace) by excel2sbol.converter
      for tl in doc:
-          ##### old - https://flapjack.rudge-lab.org/ID
+          ##### old - http://flapjack.rudge-lab.org/ID --> http instead of https??
           if fj_instance + '/ID' in tl.properties:
                sbol_uri = tl.properties['http://sbols.org/v2#persistentIdentity'][0]
                sbol_uri = sbol_uri.replace(homespace, sbol_collec_url)
@@ -94,7 +94,7 @@ def experimental_data_uploader(sbh_instance, fj_instance, file_path_in, fj_user,
                sbol_hash_map[sbol_name] = sbol_uri
 
 
-     # upload the excel file to flapjack and get hash map back
+     # upload the excel file to flapjack and get hash map back 
      ##### old - flapjack.rudge-lab.org:8000
      fj_url = fj_instance + ":8000"
      # hash_map = e2f.flapjack_upload(fj_url, fj_user, fj_pass, file_path_in)
